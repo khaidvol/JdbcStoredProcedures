@@ -15,11 +15,11 @@ public class ReportProcedures {
 
     private static final String CRETE_PROC_SHOW_ALL_DATA =
             "create procedure SHOW_ALL_DATA() " +
-            "begin " +
-            "SELECT * FROM SINGER\n" +
+                    "begin " +
+                    "SELECT * FROM SINGER\n" +
                     "LEFT JOIN ALBUM ON SINGER.ID = ALBUM.SINGER_ID\n" +
                     "LEFT JOIN TRACK ON ALBUM.ID = TRACK.ALBUM_ID; " +
-            "end";
+                    "end";
 
     private static final String CRETE_PROC_SHOW_COUNTED_DATA =
             "create procedure SHOW_COUNTED_DATA() " +
@@ -83,8 +83,8 @@ public class ReportProcedures {
 
     public static void executeSQL(String executeSQL) {
 
-        try(Connection connection = Datasource.getConnection();
-            Statement statement = connection.createStatement()
+        try (Connection connection = Datasource.getConnection();
+             Statement statement = connection.createStatement()
         ) {
             statement.execute(executeSQL);
         } catch (SQLException e) {
@@ -94,9 +94,9 @@ public class ReportProcedures {
     }
 
     public static void runProcedureShowAllData() {
-        try(Connection connection = Datasource.getConnection();
-            CallableStatement callableStatement = connection.prepareCall(RUN_PROC_SHOW_ALL_DATA);
-            ResultSet resultSet = callableStatement.executeQuery();
+        try (Connection connection = Datasource.getConnection();
+             CallableStatement callableStatement = connection.prepareCall(RUN_PROC_SHOW_ALL_DATA);
+             ResultSet resultSet = callableStatement.executeQuery();
         ) {
             while (resultSet.next()) {
                 logger.info("Singer ID: " + resultSet.getInt(1) + ", " +
@@ -117,9 +117,9 @@ public class ReportProcedures {
     }
 
     public static void runProcedureShowCountedData() {
-        try(Connection connection = Datasource.getConnection();
-            CallableStatement callableStatement = connection.prepareCall(RUN_PROC_SHOW_COUNTED_DATA);
-            ResultSet resultSet = callableStatement.executeQuery();
+        try (Connection connection = Datasource.getConnection();
+             CallableStatement callableStatement = connection.prepareCall(RUN_PROC_SHOW_COUNTED_DATA);
+             ResultSet resultSet = callableStatement.executeQuery();
         ) {
             while (resultSet.next()) {
                 logger.info("Singer ID: " + resultSet.getInt(1) + ", " +
@@ -136,8 +136,8 @@ public class ReportProcedures {
     }
 
     public static void runProcedureShowCountedDataForSinger(int id) {
-        try(Connection connection = Datasource.getConnection();
-            CallableStatement callableStatement = connection.prepareCall(RUN_PROC_SHOW_COUNTED_DATA_FOR_SINGER);
+        try (Connection connection = Datasource.getConnection();
+             CallableStatement callableStatement = connection.prepareCall(RUN_PROC_SHOW_COUNTED_DATA_FOR_SINGER);
         ) {
             callableStatement.setInt(1, id);
             ResultSet resultSet = callableStatement.executeQuery();

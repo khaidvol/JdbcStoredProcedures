@@ -44,13 +44,13 @@ public class TestProcedures {
 
 
     @BeforeClass
-    public static void prepareDB(){
+    public static void prepareDB() {
         DatabaseCreator.createTables();
         DatabaseCreator.populateData();
     }
 
     @Test
-    public void dropAllProcedures(){
+    public void dropAllProcedures() {
         ReportProcedures.dropProcedureShowAllData();
         ReportProcedures.dropProcedureShowCountedData();
         ReportProcedures.dropProcedureShowCountedDataForSinger();
@@ -72,76 +72,76 @@ public class TestProcedures {
 
     // test creation of Report procedures
     @Test
-    public void testShowAllDataProcedure(){
+    public void testShowAllDataProcedure() {
         ReportProcedures.createProcedureShowAllData();
         Assert.assertEquals(PROC_NAME_SHOW_ALL_DATA, showProcedure(PROC_NAME_SHOW_ALL_DATA));
     }
 
     @Test
-    public void testShowCounterDataProcedure(){
+    public void testShowCounterDataProcedure() {
         ReportProcedures.createProcedureShowCountedData();
         Assert.assertEquals(PROC_NAME_SHOW_COUNTED_DATA, showProcedure(PROC_NAME_SHOW_COUNTED_DATA));
     }
 
     @Test
-    public void testShowCountedDataForSingerProcedure(){
+    public void testShowCountedDataForSingerProcedure() {
         ReportProcedures.createProcedureShowCountedDataForSinger();
         Assert.assertEquals(PROC_NAME_SHOW_COUNTED_DATA_FOR_SINGER, showProcedure(PROC_NAME_SHOW_COUNTED_DATA_FOR_SINGER));
     }
 
     // test creation of Singer procedures
     @Test
-    public void testInsertSingerProcedure(){
+    public void testInsertSingerProcedure() {
         SingerProcedures.createProcedureInsertSinger();
         Assert.assertEquals(PROC_NAME_INSERT_SINGER, showProcedure(PROC_NAME_INSERT_SINGER));
     }
 
     @Test
-    public void testDeleteSingerProcedure(){
+    public void testDeleteSingerProcedure() {
         SingerProcedures.createProcedureDeleteSinger();
         Assert.assertEquals(PROC_NAME_DELETE_SINGER, showProcedure(PROC_NAME_DELETE_SINGER));
     }
 
     @Test
-    public void testShowAllSingersProcedure(){
+    public void testShowAllSingersProcedure() {
         SingerProcedures.createProcedureShowAllSingers();
         Assert.assertEquals(PROC_NAME_SHOW_ALL_SINGERS, showProcedure(PROC_NAME_SHOW_ALL_SINGERS));
     }
 
     // test creation of Album procedures
     @Test
-    public void testInsertAlbumProcedure(){
+    public void testInsertAlbumProcedure() {
         AlbumProcedures.createProcedureInsertAlbum();
         Assert.assertEquals(PROC_NAME_INSERT_ALBUM, showProcedure(PROC_NAME_INSERT_ALBUM));
     }
 
     @Test
-    public void testDeleteAlbumProcedure(){
+    public void testDeleteAlbumProcedure() {
         AlbumProcedures.createProcedureDeleteAlbum();
         Assert.assertEquals(PROC_NAME_DELETE_ALBUM, showProcedure(PROC_NAME_DELETE_ALBUM));
     }
 
     @Test
-    public void testShowAllAlbumsProcedure(){
+    public void testShowAllAlbumsProcedure() {
         AlbumProcedures.createProcedureShowAllAlbums();
         Assert.assertEquals(PROC_NAME_SHOW_ALL_ALBUMS, showProcedure(PROC_NAME_SHOW_ALL_ALBUMS));
     }
 
     // test creation of Track procedures
     @Test
-    public void testInsertTrackProcedure(){
+    public void testInsertTrackProcedure() {
         TrackProcedures.createProcedureInsertTrack();
         Assert.assertEquals(PROC_NAME_INSERT_TRACK, showProcedure(PROC_NAME_INSERT_TRACK));
     }
 
     @Test
-    public void testDeleteTrackProcedure(){
+    public void testDeleteTrackProcedure() {
         TrackProcedures.createProcedureDeleteTrack();
         Assert.assertEquals(PROC_NAME_DELETE_TRACK, showProcedure(PROC_NAME_DELETE_TRACK));
     }
 
     @Test
-    public void testShowAllTracksProcedure(){
+    public void testShowAllTracksProcedure() {
         TrackProcedures.createProcedureShowAllTracks();
         Assert.assertEquals(PROC_NAME_SHOW_ALL_TRACKS, showProcedure(PROC_NAME_SHOW_ALL_TRACKS));
     }
@@ -149,13 +149,13 @@ public class TestProcedures {
     //find procedure in the DB
     public static String showProcedure(String procedureName) {
         String procedure = null;
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL_QUERY_SHOW_PROCEDURE);
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_QUERY_SHOW_PROCEDURE);
         ) {
             statement.setString(1, DB_NAME);
             statement.setString(2, procedureName);
-            ResultSet resultSet =  statement.executeQuery();
-            if(resultSet.next()){
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
                 procedure = resultSet.getString(2);
             }
         } catch (SQLException e) {
@@ -165,14 +165,14 @@ public class TestProcedures {
     }
 
     //find all procedure in the DB
-    public static List<String>  showAllProcedures() {
+    public static List<String> showAllProcedures() {
         List<String> listOfProcedures = new ArrayList<>();
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQL_QUERY_SHOW_ALL_PROCEDURES);
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_QUERY_SHOW_ALL_PROCEDURES);
         ) {
             statement.setString(1, DB_NAME);
-            ResultSet resultSet =  statement.executeQuery();
-            if(resultSet.next()){
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
                 listOfProcedures.add(resultSet.getString(2));
             }
         } catch (SQLException e) {

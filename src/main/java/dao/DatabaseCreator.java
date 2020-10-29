@@ -15,11 +15,11 @@ public class DatabaseCreator {
     public static final String TEST_DATA = "src/main/resources/db/test-data.sql";
 
 
-    public static void createTables(){
+    public static void createTables() {
         executeSqlScript(SCHEMA);
     }
 
-    public static void populateData(){
+    public static void populateData() {
         executeSqlScript(TEST_DATA);
     }
 

@@ -20,9 +20,9 @@ public class AlbumDao {
 
     public static List<Album> findAllAlbums() {
         List<Album> albums = new ArrayList<>();
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_ALBUMS)
-        ){
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_ALBUMS)
+        ) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Album album = new Album();
@@ -39,13 +39,13 @@ public class AlbumDao {
     }
 
     public static void insertAlbum(Album album) {
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ALBUM, Statement.RETURN_GENERATED_KEYS)
-        ){
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ALBUM, Statement.RETURN_GENERATED_KEYS)
+        ) {
             preparedStatement.setLong(1, album.getSingerId());
             preparedStatement.setString(2, album.getTitle());
             preparedStatement.setDate(3, album.getReleaseDate());
-            if(preparedStatement.execute()) {
+            if (preparedStatement.execute()) {
                 logger.info(album.getTitle() + " - album added to the db");
             }
 
@@ -59,9 +59,9 @@ public class AlbumDao {
     }
 
     public static void deleteAlbum(Long albumId) {
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ALBUM)
-        ){
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ALBUM)
+        ) {
             preparedStatement.setLong(1, albumId);
             preparedStatement.execute();
 

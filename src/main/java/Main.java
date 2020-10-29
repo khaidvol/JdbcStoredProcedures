@@ -1,9 +1,11 @@
 import dao.DatabaseCreator;
+import procedures.PredefinedStoredProcedures;
 import procedures.ReportProcedures;
 
 public class Main {
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
+        //TASK 5 - Stored Procedure
         DatabaseCreator.createTables();
         DatabaseCreator.populateData();
 
@@ -25,6 +27,12 @@ public class Main {
         ReportProcedures.dropProcedureShowAllData();
         ReportProcedures.dropProcedureShowCountedData();
         ReportProcedures.dropProcedureShowCountedDataForSinger();
+
+        //Task 6 - Pre-defined Stored Procedure
+        System.out.println("\nRunning procedure ps_setup_show_enabled_consumers: \n");
+        PredefinedStoredProcedures.runProcedurePsSetupShowEnabledConsumers();
+        System.out.println("\nRunning procedure ps_setup_show_enabled_instruments: \n");
+        PredefinedStoredProcedures.runProcedurePsSetupShowEnabledInstruments();
 
     }
 }

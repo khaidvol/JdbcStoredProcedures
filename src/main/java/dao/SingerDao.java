@@ -20,9 +20,9 @@ public class SingerDao {
 
     public static List<Singer> findAllSingers() {
         List<Singer> singers = new ArrayList<>();
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_SINGERS)
-        ){
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_SINGERS)
+        ) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Singer singer = new Singer();
@@ -39,14 +39,14 @@ public class SingerDao {
     }
 
     public static void insertSinger(Singer singer) {
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SINGER, Statement.RETURN_GENERATED_KEYS)
-        ){
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SINGER, Statement.RETURN_GENERATED_KEYS)
+        ) {
             preparedStatement.setString(1, singer.getFirstName());
             preparedStatement.setString(2, singer.getFirstName());
             preparedStatement.setDate(3, singer.getBirthDate());
 
-            if(preparedStatement.execute()) {
+            if (preparedStatement.execute()) {
                 logger.info(singer.getFirstName() + " " + singer.getLastName() + " - singer added to the db");
             }
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -59,9 +59,9 @@ public class SingerDao {
     }
 
     public static void deleteSinger(Long singerId) {
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SINGER)
-        ){
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SINGER)
+        ) {
             preparedStatement.setLong(1, singerId);
             preparedStatement.execute();
 

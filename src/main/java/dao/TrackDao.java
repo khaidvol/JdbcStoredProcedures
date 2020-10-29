@@ -20,9 +20,9 @@ public class TrackDao {
 
     public static List<Track> findAllTracks() {
         List<Track> tracks = new ArrayList<>();
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_TRACKS)
-        ){
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_TRACKS)
+        ) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Track track = new Track();
@@ -39,14 +39,14 @@ public class TrackDao {
     }
 
     public static void insertAlbum(Track track) {
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TRACK)
-        ){
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TRACK)
+        ) {
             preparedStatement.setString(1, track.getTitle());
             preparedStatement.setLong(2, track.getAlbumId());
             preparedStatement.setLong(2, track.getTrackId());
             preparedStatement.setInt(3, track.getDuration());
-            if(preparedStatement.execute()) {
+            if (preparedStatement.execute()) {
                 logger.info(track.getTitle() + " - track added to the db");
             }
 
@@ -56,11 +56,11 @@ public class TrackDao {
     }
 
     public static void deleteTrack(String trackTitle) {
-        try(Connection connection = Datasource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TRACK)
-        ){
+        try (Connection connection = Datasource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TRACK)
+        ) {
             preparedStatement.setString(1, trackTitle);
-            if(preparedStatement.execute()) {
+            if (preparedStatement.execute()) {
                 logger.info(trackTitle + " - track deleted from the db");
             }
 
